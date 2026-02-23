@@ -1,0 +1,28 @@
+
+services:
+  minimal:
+    build:
+      context: .
+      dockerfile: Dockerfile.Minimal
+    environment:
+      - Jwt__Key=Clave_Super_Larga_de_mas_de_32_caracteres_2026_!!
+      - ASPNETCORE_ENVIRONMENT=Development 
+    ports:
+      - "5080:8080"
+    depends_on:
+      - redis
+  controllers:
+    build:
+      context: .
+      dockerfile: Dockerfile.Controllers
+    environment:
+      - Jwt__Key=Clave_Super_Larga_de_mas_de_32_caracteres_2026_!!
+      - ASPNETCORE_ENVIRONMENT=Development 
+    ports:
+      - "6080:8080"
+    depends_on:
+      - redis
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
